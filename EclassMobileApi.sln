@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclassMobileApi", "EclassMobileApi\EclassMobileApi.csproj", "{A6ABF575-8F35-4E31-A4D9-235B7CE32CFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6ABF575-8F35-4E31-A4D9-235B7CE32CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6ABF575-8F35-4E31-A4D9-235B7CE32CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6ABF575-8F35-4E31-A4D9-235B7CE32CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6ABF575-8F35-4E31-A4D9-235B7CE32CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EA702A2-ABB4-4BE6-98DB-62285F3B8F05}
+	EndGlobalSection
+EndGlobal
