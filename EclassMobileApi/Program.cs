@@ -1,12 +1,6 @@
 ﻿using System;
 using Flurl.Http;
 using System.Threading.Tasks;
-using System.Net;
-using System.Text;
-using System.Linq;
-using System.Xml;
-using System.Collections.Specialized;
-using HtmlAgilityPack;
 using System.Collections.Generic;
 
 namespace EclassMobileApi
@@ -50,7 +44,7 @@ namespace EclassMobileApi
                 opencourses = await (_auebEclass + _OpenCourses).PostUrlEncodedAsync(new { token = login }).ReceiveString();
 
             }).GetAwaiter().GetResult();
-            Model.ToolViewModel toolViewModel = new Model.ToolViewModel();
+            ViewModel.ToolViewModel toolViewModel = new ViewModel.ToolViewModel(login);
             Task.Run(async () =>
             {
                 tools = await (_auebEclass + _tools + "INF261").PostUrlEncodedAsync(new { token = login }).ReceiveString();
@@ -61,10 +55,10 @@ namespace EclassMobileApi
             Task.Run(async () => {portfolioPage= await (_auebEclass+_PortfolioPage).PostUrlEncodedAsync(new { token = login }).ReceiveString(); }).GetAwaiter().GetResult();
             Model.AnnouncementToken AnnouncementToken = new Model.AnnouncementToken("INF261", login);
             Console.WriteLine("Login: "+loginurl + Environment.NewLine + LoginResult);
-            Console.WriteLine("Portfolio: " + Environment.NewLine + portfolio);
-            Console.WriteLine("User Courses:" + Environment.NewLine + userCourses);
-            Console.WriteLine("Open courses:" + Environment.NewLine + opencourses);
-            Console.WriteLine("Tools:" + Environment.NewLine+ tools + Environment.NewLine + toolViewModel.ToString());
+            //Console.WriteLine("Portfolio: " + Environment.NewLine + portfolio);
+            //Console.WriteLine("User Courses:" + Environment.NewLine + userCourses);
+            //Console.WriteLine("Open courses:" + Environment.NewLine + opencourses);
+            Console.WriteLine("Tools:" + Environment.NewLine + toolViewModel.ToString());
             
             //Console.WriteLine(portfolioPage);
             Console.WriteLine("Portfolio:" + Environment.NewLine + EclassUser.GetUID(LoginResult, _auebEclass + _PortfolioPage));
