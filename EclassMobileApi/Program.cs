@@ -39,19 +39,15 @@ namespace EclassMobileApi
                 userCourses = await (_auebEclass + _UserCourses).PostUrlEncodedAsync(new { token = login }).ReceiveString();
 
             }).GetAwaiter().GetResult();
-            Task.Run(async () =>
-            {
-                opencourses = await (_auebEclass + _OpenCourses).PostUrlEncodedAsync(new { token = login }).ReceiveString();
-
-            }).GetAwaiter().GetResult();
+            
             ViewModel.ToolViewModel toolViewModel = new ViewModel.ToolViewModel(login);
             Task.Run(async () =>
             {
                 tools = await (_auebEclass + _tools + "INF261").PostUrlEncodedAsync(new { token = login }).ReceiveString();
                 
-                toolViewModel.SetTools(tools);
+                
             }).GetAwaiter().GetResult();
-            
+            toolViewModel.SetTools(tools);
             Task.Run(async () => {portfolioPage= await (_auebEclass+_PortfolioPage).PostUrlEncodedAsync(new { token = login }).ReceiveString(); }).GetAwaiter().GetResult();
             Model.AnnouncementToken AnnouncementToken = new Model.AnnouncementToken("INF261", login);
             Console.WriteLine("Login: "+loginurl + Environment.NewLine + LoginResult);
