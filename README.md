@@ -7,9 +7,9 @@
 - [x] Course(courseID, Token)
 	- [ ] Announcements
 
-	- [ ] Directories
+	- [x] Directories(2 HtmlNode elements)
     
-    - [x] Course Description
+    - [x] Course Description(HtmlNode element)
     
-    - [x] Description
+    - [x] Description(HtmlNode element)
 - [ ] **Nuget package**

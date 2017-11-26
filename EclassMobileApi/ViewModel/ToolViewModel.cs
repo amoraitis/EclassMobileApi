@@ -35,7 +35,7 @@ namespace EclassMobileApi.ViewModel
 
         private void AddContent()
         {
-            for(int i=0; i<3; i++) {
+            for (int i = 0; i < 3; i++) {
                 Tool tool = Tools.ElementAt(i);
                 switch (tool.Type)
                 {
@@ -46,6 +46,7 @@ namespace EclassMobileApi.ViewModel
                         tool.Content = GetDescription(tool.Link).GetAwaiter().GetResult();
                         break;
                     case "docs":
+                        tool.Content = GetDocs(tool.Link).GetAwaiter().GetResult();
                         break;
                     default:
                         tool.Content = null;
@@ -54,11 +55,22 @@ namespace EclassMobileApi.ViewModel
             }
         }
 
+        private async Task<object> GetDocs(string link)
+        {
+            string docs = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(docs);
+
+            var res = htmlDocument.DocumentNode.SelectNodes("//div").Where(div => div.InnerText != "" && div.Attributes["class"] != null).Where(div => div.Attributes["class"].Value == "row");//.Where(div => div.InnerHtml.Contains("openDir"));
+            res = res.ToList().GetRange(2, 2);
+            return res;
+        }
+
         private async Task<HtmlNode> GetDescription(string link)
         {
-            string courseDescription = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
+            string description = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
             HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.LoadHtml(courseDescription);
+            htmlDocument.LoadHtml(description);
             var res = htmlDocument.DocumentNode.SelectNodes("//div").Where(div => div.InnerText != "" && div.Attributes["id"] != null)
                 .Where(div => div.Attributes["id"].Value == "main-content").FirstOrDefault();
             return res;
@@ -72,7 +84,6 @@ namespace EclassMobileApi.ViewModel
             remove.Remove();
             var res = htmlDocument.DocumentNode.SelectNodes("//div").Where(div => div.InnerText != "" && div.Attributes["class"] != null)
                 .Where(div => div.Attributes["class"].Value == "panel panel-default").FirstOrDefault();
-            
             return res;
         }
 
@@ -88,7 +99,7 @@ namespace EclassMobileApi.ViewModel
         override public string ToString()
         {
             string toolsName = "";
-            Tools.ForEach(t => {if(t.Content.GetType()==typeof(HtmlNode))toolsName += t.Name + "\t" + t.Type + "\t" + t.Link + "\n"+((HtmlNode)t.Content).InnerText; });
+            //Tools.ForEach(t => {if(t.Content.GetType()==typeof(HtmlNode))toolsName += t.Name + "\t" + t.Type + "\t" + t.Link + "\n"+((HtmlNode)t.Content).InnerText; });
             return toolsName;
         }
     }
