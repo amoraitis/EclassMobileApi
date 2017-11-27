@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>EclassApi</id>
+    <version>1.1.0</version>
+    <title>EclassApi</title>
+    <authors>amoraitis</authors>
+    <owners>amoraitis</owners>
+    <projectUrl>https://github.com/amoraitis/EclassMobileApi</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Eclass Mobile API Client for C#</description>
+    <releaseNotes>Initial Release</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Eclass EclassApi</tags>
+  </metadata>
+</package>

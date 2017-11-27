@@ -2,12 +2,12 @@
 using Flurl.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using EclassApi;
 
 namespace EclassMobileApi
 {
     class Program
     {
-        
         static string _auebEclass = "https://eclass.aueb.gr",
              _Login = "/modules/mobile/mlogin.php",
             _portfolio = "/modules/mobile/mportfolio.php",
@@ -54,9 +54,9 @@ namespace EclassMobileApi
             //Console.WriteLine("Portfolio: " + Environment.NewLine + portfolio);
             //Console.WriteLine("User Courses:" + Environment.NewLine + userCourses);
             //Console.WriteLine("Open courses:" + Environment.NewLine + opencourses);
-            Console.WriteLine("Tools:" + Environment.NewLine + toolViewModel.ToString());
+            //Console.WriteLine("Tools:" + Environment.NewLine + toolViewModel.ToString());
             
-            //Console.WriteLine(portfolioPage);
+            Console.WriteLine(tools);
             Console.WriteLine("Portfolio:" + Environment.NewLine + EclassUser.GetUID(LoginResult, _auebEclass + _PortfolioPage));
             Console.WriteLine("Token for course with code INF261:" + AnnouncementToken.Token);
             System.Console.ReadLine();

@@ -5,11 +5,14 @@
 - [x] Tools for Course(specific)
 - [x] EclassUser Data(username, pass, uid)
 - [x] Course(courseID, Token)
-	- [ ] Announcements
+	- [x] Announcements
 
 	- [x] Directories(2 HtmlNode elements)
     
     - [x] Course Description(HtmlNode element)
     
     - [x] Description(HtmlNode element)
-- [ ] **Nuget package**
+- [x] [**Nuget package**](https://www.nuget.org/packages/EclassApi/)
+- [ ] Documentation
+
+HtmlNode [Documentation](http://www.nudoq.org/#!/Packages/HtmlAgilityPack/HtmlAgilityPack/HtmlNode)

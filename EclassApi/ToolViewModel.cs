@@ -6,20 +6,20 @@ using HtmlAgilityPack;
 using Flurl.Http;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Diagnostics;
 
-namespace EclassMobileApi.ViewModel
+namespace EclassApi.ViewModel
 {
-    public class ToolViewModel
+    internal class ToolViewModel
     {
-        private string _LoginToken;
+        private string _SessionToken, _CourseID, _Uid, _BaseUrl;
         public List<Tool> Tools { get; set; }
-        public ToolViewModel(string loginToken)
+        internal ToolViewModel(string sessionToken, string courseID,string uid,string baseurl)
         {
-            _LoginToken = loginToken;
+            _SessionToken = sessionToken; _CourseID = courseID;
+            _Uid = uid; _BaseUrl = baseurl;
             Tools = new List<Tool>();
         }
-        public void SetTools(string xml)
+        private void SetTools(string xml)
         {
             XDocument toolsDocument = XDocument.Load(GenerateStreamFromString(xml));
             toolsDocument.Root.Elements("toolgroup").Elements("tool")
@@ -48,6 +48,9 @@ namespace EclassMobileApi.ViewModel
                     case "docs":
                         tool.Content = GetDocs(tool.Link).GetAwaiter().GetResult();
                         break;
+                    case "announcements":
+                        tool.Content = GetAnnouncements(tool.Link);
+                        break;
                     default:
                         tool.Content = null;
                         break;
@@ -55,9 +58,15 @@ namespace EclassMobileApi.ViewModel
             }
         }
 
+        private List<Announcement> GetAnnouncements(string link)
+        {
+            AnnouncementViewModel announcements = new AnnouncementViewModel(_Uid, _SessionToken, _CourseID, _BaseUrl);
+            return announcements.Announcements;
+        }
+
         private async Task<object> GetDocs(string link)
         {
-            string docs = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
+            string docs = await link.PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString();
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(docs);
 
@@ -68,7 +77,7 @@ namespace EclassMobileApi.ViewModel
 
         private async Task<HtmlNode> GetDescription(string link)
         {
-            string description = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
+            string description = await link.PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString();
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(description);
             var res = htmlDocument.DocumentNode.SelectNodes("//div").Where(div => div.InnerText != "" && div.Attributes["id"] != null)
@@ -77,7 +86,7 @@ namespace EclassMobileApi.ViewModel
         }
         private async Task<HtmlNode> GetCourseDescription(string link)
         {
-            string courseDescription = await link.PostUrlEncodedAsync(new { token = _LoginToken }).ReceiveString();
+            string courseDescription = await link.PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString();
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(courseDescription);
             var remove = htmlDocument.DocumentNode.SelectNodes("//ul").Where(ul => ul.Attributes["class"] != null).Where(ul => ul.Attributes["class"].Value == "course-title-actions clearfix pull-right list-inline").FirstOrDefault();
@@ -96,15 +105,9 @@ namespace EclassMobileApi.ViewModel
             stream.Position = 0;
             return stream;
         }
-        override public string ToString()
-        {
-            string toolsName = "";
-            //Tools.ForEach(t => {if(t.Content.GetType()==typeof(HtmlNode))toolsName += t.Name + "\t" + t.Type + "\t" + t.Link + "\n"+((HtmlNode)t.Content).InnerText; });
-            return toolsName;
-        }
     }
 }
-namespace EclassMobileApi.ViewModel
+namespace EclassApi
 {
     public class Tool
     {
@@ -116,7 +119,7 @@ namespace EclassMobileApi.ViewModel
         //Returns true if we can implement this tool
         public bool IsNeeded()
         {
-            return Type.Equals("coursedescription") || Type.Equals("description") || Type.Equals("docs");
+            return Type.Equals("coursedescription") || Type.Equals("announcements") || Type.Equals("description") || Type.Equals("docs");
         }
     }
 }
