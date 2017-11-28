@@ -25,7 +25,7 @@ case announcements: List<Announcements>
 ```
 
 #### Class Diagram for Avalaible Classes and fields
-![ClassDiagram.svg](https://raw.githubusercontent.com/amoraitis/EclassMobileApi/master/EclassApi/ClassDiagram.svg)
+![ClassDiagram.svg](https://raw.githubusercontent.com/amoraitis/EclassMobileApi/master/EclassApi/ClassDiagram.png)
 
 #### Roadmap-Features
 
