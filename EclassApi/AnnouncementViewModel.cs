@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Microsoft.SyndicationFeed;
 using X.Web.RSS;
 using System.Threading.Tasks;
 using HtmlAgilityPack;

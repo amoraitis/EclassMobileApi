@@ -1,11 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>lib\Debug\netcoreapp2.0\</OutputPath>
+    <OutputPath>lib\netcoreapp2.0\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>lib\netcoreapp2.0\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +19,6 @@
     <PackageReference Include="HtmlAgilityPack">
 		<Version>1.6.5</Version>
 	</PackageReference>
-    <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="xwebrss" Version="2.1.0" />
   </ItemGroup>
 
