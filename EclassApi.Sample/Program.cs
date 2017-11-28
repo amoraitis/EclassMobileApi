@@ -13,11 +13,14 @@ namespace EclassApi.Sample
 
             {
 
-                await eclassUser.Start("p3140138", "noveplef97");
+                await eclassUser.Start("Username", "Password");
 
                 eclassUser.FillDetails();
 
-                eclassUser.UserCourses.ForEach(course => Console.WriteLine(course.Name + " " + course.ID));
+                eclassUser.UserCourses.ForEach(course => {
+                    Console.WriteLine(course.Name + " " + course.ID);
+                    course.Tools.ForEach(tool=>Console.WriteLine(tool.Name));
+                });
 
             });
 

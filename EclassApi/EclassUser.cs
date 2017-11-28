@@ -42,6 +42,7 @@ namespace EclassApi
         public void DestroySession()
         {
             (BaseURL + _Logout).PostUrlEncodedAsync(new { token = SessionToken }).ReceiveString();
+            SessionToken = null;
         }
         private string GetUID(string SessionToken, string portfolioURL)
         {

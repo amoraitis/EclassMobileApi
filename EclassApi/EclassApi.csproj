@@ -1,6 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <id>EclassApi</id>
+    <version>1.1.6</version>
+    <title>EclassApi</title>
+    <authors>amoraitis</authors>
+    <owners>amoraitis</owners>
+    <projectUrl>https://github.com/amoraitis/EclassMobileApi</projectUrl>
+    <PublishUrl>https://github.com/amoraitis/EclassMobileApi</PublishUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>An Eclass Mobile API Client for C#</description>
+    <releaseNotes>Bug fixes and improvements</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+  </PropertyGroup>
+  <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 

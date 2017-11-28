@@ -94,9 +94,5 @@ namespace EclassApi {
             Title = title;
             Description = description;
         }
-        public override string ToString()
-        {
-            return Title + "\n" + Link + "\n" + Description;
-        }
     }
 }

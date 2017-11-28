@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
-      "EclassApi/1.0.0": {
+      "EclassApi/1.1.6": {
         "dependencies": {
           "Flurl.Http": "2.0.1",
           "HtmlAgilityPack": "1.6.5",
@@ -928,7 +928,7 @@
     }
   },
   "libraries": {
-    "EclassApi/1.0.0": {
+    "EclassApi/1.1.6": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

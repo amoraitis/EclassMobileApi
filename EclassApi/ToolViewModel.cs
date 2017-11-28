@@ -11,16 +11,19 @@ namespace EclassApi.ViewModel
 {
     internal class ToolViewModel
     {
-        private string _SessionToken, _CourseID, _Uid, _BaseUrl;
-        public List<Tool> Tools { get; set; }
+        private string _SessionToken, _CourseID, _Uid, _BaseUrl, 
+            _ToolsEndpoint= "/modules/mobile/mtools.php?course=";
+        internal List<Tool> Tools { get; set; }
         internal ToolViewModel(string sessionToken, string courseID,string uid,string baseurl)
         {
             _SessionToken = sessionToken; _CourseID = courseID;
             _Uid = uid; _BaseUrl = baseurl;
             Tools = new List<Tool>();
+            SetTools();
         }
-        private void SetTools(string xml)
+        private void SetTools()
         {
+            string xml = (_BaseUrl + _ToolsEndpoint + _CourseID).PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString().GetAwaiter().GetResult();
             XDocument toolsDocument = XDocument.Load(GenerateStreamFromString(xml));
             toolsDocument.Root.Elements("toolgroup").Elements("tool")
                 .Select(t => new Tool
@@ -64,7 +67,7 @@ namespace EclassApi.ViewModel
             return announcements.Announcements;
         }
 
-        private async Task<object> GetDocs(string link)
+        private async Task<List<HtmlNode>> GetDocs(string link)
         {
             string docs = await link.PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString();
             HtmlDocument htmlDocument = new HtmlDocument();
@@ -72,7 +75,7 @@ namespace EclassApi.ViewModel
 
             var res = htmlDocument.DocumentNode.SelectNodes("//div").Where(div => div.InnerText != "" && div.Attributes["class"] != null).Where(div => div.Attributes["class"].Value == "row");//.Where(div => div.InnerHtml.Contains("openDir"));
             res = res.ToList().GetRange(2, 2);
-            return res;
+            return res.ToList();
         }
 
         private async Task<HtmlNode> GetDescription(string link)
@@ -117,7 +120,7 @@ namespace EclassApi
         public string Type { get; set; }
         public Object Content { get; set; }
         //Returns true if we can implement this tool
-        public bool IsNeeded()
+        internal bool IsNeeded()
         {
             return Type.Equals("coursedescription") || Type.Equals("announcements") || Type.Equals("description") || Type.Equals("docs");
         }
