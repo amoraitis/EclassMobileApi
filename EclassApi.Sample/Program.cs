@@ -15,7 +15,7 @@ namespace EclassApi.Sample
 
             {
                 Console.WriteLine(DateTime.Now);
-                await eclassUser.Start("Username", "Password");
+                await eclassUser.Start("UserName", "PassWord");
 
                 eclassUser.FillDetails();
 
