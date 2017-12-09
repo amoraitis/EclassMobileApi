@@ -6,6 +6,7 @@ using X.Web.RSS;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.Linq;
+using System.Xml;
 
 namespace EclassApi.ViewModel
 {
@@ -40,6 +41,7 @@ namespace EclassApi.ViewModel
         {
             var rss = "";
             rss = await GetRSS(RSSAnnouncementsURL);
+            
             var rssDocument = RssDocument.Load(rss);
             foreach (X.Web.RSS.Structure.RssItem item in rssDocument.Channel.Items)
             {
@@ -66,7 +68,7 @@ namespace EclassApi.ViewModel
             catch(FlurlHttpException)
             {
                 string announcementToken = GetToken();
-                return await (RSSAnnouncementsURL + "&uid=" + _Uid + "&token=" + announcementToken).PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString();
+                return await (RSSAnnouncementsURL + "&uid=" + _Uid + "&token=" + announcementToken).GetAsync().ReceiveString();
             }
         }
         private string GetToken()

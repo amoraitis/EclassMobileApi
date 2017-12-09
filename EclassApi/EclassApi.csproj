@@ -1,38 +1,30 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <PropertyGroup>
     <id>EclassApi</id>
-    <version>1.1.6</version>
+    <version>1.1.9</version>
     <title>EclassApi</title>
     <authors>amoraitis</authors>
     <owners>amoraitis</owners>
-    <projectUrl>https://github.com/amoraitis/EclassMobileApi</projectUrl>
-    <PublishUrl>https://github.com/amoraitis/EclassMobileApi</PublishUrl>
+    <PackageProjectUrl>https://github.com/amoraitis/EclassMobileApi</PackageProjectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <PackageReleaseNotes>Fixed some compatibility errors with external libraries</PackageReleaseNotes>
     <description>An Eclass Mobile API Client for C#</description>
-    <releaseNotes>Bug fixes and improvements</releaseNotes>
+    <RepositoryUrl>https://github.com/amoraitis/EclassMobileApi</RepositoryUrl>
+    <PackageTags>eclass, eclassmobileapi, gr</PackageTags>
     <copyright>Copyright 2017</copyright>
   </PropertyGroup>
+  
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;dotnet</PackageTargetFallback>  
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>lib\netcoreapp2.0\</OutputPath>
+    <OutputType>library</OutputType>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>lib\netcoreapp2.0\</OutputPath>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Flurl.Http">
-		<Version>2.0.1</Version>
-	</PackageReference>
-    <PackageReference Include="HtmlAgilityPack">
-		<Version>1.6.5</Version>
-	</PackageReference>
-    <PackageReference Include="xwebrss" Version="2.1.0" />
+    <PackageReference Include="Flurl.Http" Version="2.0.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.6.6" />
+    <PackageReference Include="xwebrss" Version="2.0.0" />
   </ItemGroup>
-
 </Project>
