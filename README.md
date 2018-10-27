@@ -1,5 +1,6 @@
 # [Eclass Mobile API](https://dev.openeclass.org/projects/openeclass/wiki/%CE%A7%CF%81%CE%AE%CF%83%CE%B7_%CF%84%CE%BF%CF%85_Mobile_API) Client for C#(.net core)
 [![NuGet version](https://badge.fury.io/nu/EclassApi.svg)](https://badge.fury.io/nu/EclassApi)
+[![Build status](https://ci.appveyor.com/api/projects/status/v0ef1a14et07k0td?svg=true)](https://ci.appveyor.com/project/amoraitis/eclassmobileapi)
 
 It will take 12 seconds to login and download(fill) 10 courses.
 
