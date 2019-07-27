@@ -9,13 +9,13 @@ namespace EclassApi.Sample
     {
         static void Main(string[] args)
         {
-            EclassUser eclassUser = new EclassUser("aueb");
-
+            EclassUser eclassUser = new EclassUser("uni");
+            DateTime started = DateTime.Now;
             Task.Run(async () =>
 
             {
-                Console.WriteLine(DateTime.Now);
-                await eclassUser.Start("UserName", "PassWord");
+                
+                await eclassUser.Start("username", "password");
 
                 eclassUser.FillDetails();
 
@@ -24,9 +24,10 @@ namespace EclassApi.Sample
                     Console.WriteLine(course.Name + " " + course.ID);
                     course.Tools.ForEach(tool => Console.WriteLine(tool.Name));
                 });
-                Console.WriteLine(DateTime.Now);
+                var end = DateTime.Now;
+                Console.WriteLine(end - started);
             });
-
+            
             Console.ReadLine();
 
         }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using System.Linq;
 using System.Xml;
+using System.IO;
+using System.Diagnostics;
 
 namespace EclassApi.ViewModel
 {
@@ -14,7 +16,6 @@ namespace EclassApi.ViewModel
     {
         private string _Uid, _SessionToken, _CourseID, AnnouncementsURL, RSSAnnouncementsURL;
         internal List<Announcement> Announcements { get; set; }
-        const string HTML_TAG_PATTERN = "</*?>";
 
         public AnnouncementViewModel(string uid, string sessionToken,string courseID, string baseurl)
         {
@@ -24,31 +25,26 @@ namespace EclassApi.ViewModel
             _CourseID = courseID;
             AnnouncementsURL = (baseurl +"/modules/announcements/?course="+_CourseID);
             RSSAnnouncementsURL = (baseurl + "/modules/announcements/rss.php?c=" + _CourseID);
-            SetAnouncements();
+            SetAnouncementsAsync();
 
         }
-        private static string HTMLtoSTRING(string HTML)
-        {
-            string tmp = HTML;
-            tmp = Regex.Replace
-              (tmp, HTML_TAG_PATTERN, string.Empty);
-            tmp = Regex.Replace(tmp, "&#", string.Empty);
-            tmp = Regex.Replace(tmp, "160;", string.Empty);
-            return tmp;
-        }
+        
 
-        internal async void SetAnouncements()
+        internal async void SetAnouncementsAsync()
         {
-            var rss = "";
-            rss = await GetRSS(RSSAnnouncementsURL);
+            var rss = await GetRSS(RSSAnnouncementsURL);
+            //Correct RSS
+            if(rss.Contains("<lastBuildDate></lastBuildDate>"))
+                rss = rss.Replace("<lastBuildDate></lastBuildDate>", "");
+
+            RssDocument rssDocument = RssDocument.Load(rss);
             
-            var rssDocument = RssDocument.Load(rss);
             foreach (X.Web.RSS.Structure.RssItem item in rssDocument.Channel.Items)
             {
                 Announcement an = new Announcement
                 {
-                    Title = HTMLtoSTRING(item.Title),
-                    Description = HTMLtoSTRING(item.Description),
+                    Title = Extensions.StringExtensions.HTMLtoSTRING(item.Title),
+                    Description = Extensions.StringExtensions.HTMLtoSTRING(item.Description),
                     DatePublished = item.PubDate.Value.ToString("MM/dd/yyyy HH:mm"),
                     Link = item.Link.Url
                 };
@@ -59,7 +55,7 @@ namespace EclassApi.ViewModel
         {
             this.Announcements.Add(announcement);
         }
-        private async Task<string> GetRSS(string struri)
+        private async Task<String> GetRSS(string struri)
         {
             try
             {

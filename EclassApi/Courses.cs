@@ -1,4 +1,5 @@
-﻿using Flurl.Http;
+﻿using EclassApi.Extensions;
+using Flurl.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace EclassApi.ViewModel
             string coursesXml = (baseurl+ _UserCourses)
                .PostUrlEncodedAsync(new { token = SessionToken })
                .ReceiveString().GetAwaiter().GetResult();
-            XDocument coursesXDocument = XDocument.Load(GenerateStreamFromString(coursesXml));
+            XDocument coursesXDocument = XDocument.Load(StringExtensions.GenerateStreamFromString(coursesXml));
             return coursesXDocument.Root
                  .Elements("coursegroup").Elements("course")
                  .Select(x => new Course
@@ -36,15 +37,6 @@ namespace EclassApi.ViewModel
                      _Uid,baseurl).Tools
                  }).ToList<Course>();
         }
-        private static Stream GenerateStreamFromString(string s)
-        {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
     }
 
 }
@@ -54,6 +46,6 @@ namespace EclassApi
     {
         public string Name { get; set; }
         public string ID { get; set; }
-        public List<Tool> Tools { get; set; }
+        public List<ToolBase> Tools { get; set; }
     }
 }
