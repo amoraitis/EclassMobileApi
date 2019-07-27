@@ -29,13 +29,50 @@ namespace EclassApi.ViewModel
         {
             string xml = (_BaseUrl + _ToolsEndpoint + _CourseID).PostUrlEncodedAsync(new { token = _SessionToken }).ReceiveString().GetAwaiter().GetResult();
             XDocument toolsDocument = XDocument.Load(Extensions.StringExtensions.GenerateStreamFromString(xml));
-            toolsDocument.Root.Elements("toolgroup").Elements("tool").Where(t=> ToolBase.IsNeeded(t.Attribute("type").Value))
-                .Select(t => new ToolBase
-                {
-                    Name = t.Attribute("name").Value,
-                    Link = t.Attribute("redirect").Value,
-                    Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
-                }).ToList().ForEach(t => Tools.Add(t));
+            Tools = toolsDocument.Root.Elements("toolgroup").Elements("tool").Where(t => ToolBase.IsNeeded(t.Attribute("type").Value))
+                .Select(t => {
+                    ToolType type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value);
+                    switch (type)
+                    {
+                        case ToolType.coursedescription:
+                            return new DescriptionTool(new ToolBase
+                            {
+                                Name = t.Attribute("name").Value,
+                                Link = t.Attribute("redirect").Value,
+                                Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
+                            });
+                        case ToolType.announcements:
+                            return new AnnouncementsTool(new ToolBase
+                            {
+                                Name = t.Attribute("name").Value,
+                                Link = t.Attribute("redirect").Value,
+                                Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
+                            });
+                        case ToolType.description:
+                            return new DescriptionTool(new ToolBase
+                            {
+                                Name = t.Attribute("name").Value,
+                                Link = t.Attribute("redirect").Value,
+                                Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
+                            });
+                        case ToolType.docs:
+                            return new DocsTool(new ToolBase
+                            {
+                                Name = t.Attribute("name").Value,
+                                Link = t.Attribute("redirect").Value,
+                                Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
+                            });
+                        default:
+                            return new ToolBase
+                            {
+                                Name = t.Attribute("name").Value,
+                                Link = t.Attribute("redirect").Value,
+                                Type = (ToolType)Enum.Parse(typeof(ToolType), t.Attribute("type").Value)
+                            };
+                    }
+                }
+
+            ).ToList();
             AddContentAsync();
         }
 
@@ -47,22 +84,18 @@ namespace EclassApi.ViewModel
                    switch (tool.Type)
                    {
                        case ToolType.coursedescription:
-                           tool = new DescriptionTool(tool);
-                           (tool as DescriptionTool).Content = await GetCourseDescription(tool.Link);
+                           ((DescriptionTool)tool).Content = await GetCourseDescription(((DescriptionTool)tool).Link);
                            break;
                        case ToolType.description:
-                           tool = new DescriptionTool(tool);
-                           (tool as DescriptionTool).Content = await GetDescription(tool.Link);
+                           ((DescriptionTool)tool).Content = await GetDescription(((DescriptionTool)tool).Link);
                            break;
                        case ToolType.docs:
-                           tool = new DocsTool(tool);
                            var docsTuple = await GetDocs(tool.Link);
-                           (tool as DocsTool).RootDirectory = docsTuple.Item1;
-                           (tool as DocsTool).RootDirectoryDownloadLink = docsTuple.Item2;
+                           ((DocsTool)tool).RootDirectory = docsTuple.Item1;
+                           ((DocsTool)tool).RootDirectoryDownloadLink = docsTuple.Item2;
                            break;
                        case ToolType.announcements:
-                           tool = new AnnouncementsTool(tool);
-                           (tool as AnnouncementsTool).Content = GetAnnouncements(tool.Link);
+                           ((AnnouncementsTool)tool).Content = GetAnnouncements(((AnnouncementsTool)tool).Link);                          
                            break;
                        default:
                            break;
