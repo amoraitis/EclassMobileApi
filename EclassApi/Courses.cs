@@ -9,21 +9,24 @@ using System.Xml.Linq;
 
 namespace EclassApi.ViewModel
 {
-    internal class Courses
+    public class Courses
     {
-        private string baseurl, _Uid,
-            _UserCourses= "/modules/mobile/mcourses.php";
-        internal List<Course> UserCourses { get; private set; }
-        internal Courses(string SessionToken, string baseurl, string uid)
+        private readonly string baseurl, uid, sessionToken,
+            _UserCourses = "/modules/mobile/mcourses.php";
+
+        public Courses(string sessionToken, string baseurl, string uid)
         {
-            this.baseurl = baseurl; this._Uid = uid;
-            UserCourses = GetUserCourses(SessionToken);
+            if (string.IsNullOrEmpty(sessionToken) || string.IsNullOrEmpty(baseurl) || string.IsNullOrEmpty(uid))
+                throw new ArgumentException();
+            this.sessionToken = sessionToken;
+            this.baseurl = baseurl;
+            this.uid = uid;
         }
 
-        internal List<Course> GetUserCourses(string SessionToken)
+        public List<Course> GetUserCourses()
         {
             string coursesXml = (baseurl+ _UserCourses)
-               .PostUrlEncodedAsync(new { token = SessionToken })
+               .PostUrlEncodedAsync(new { token = sessionToken })
                .ReceiveString().GetAwaiter().GetResult();
             XDocument coursesXDocument = XDocument.Load(StringExtensions.GenerateStreamFromString(coursesXml));
             return coursesXDocument.Root
@@ -32,9 +35,9 @@ namespace EclassApi.ViewModel
                  {
                      ID = ((string)x.Attribute("code").Value.Replace(@"\", string.Empty)),
                      Name = (string)x.Attribute("title"),
-                     Tools = new ToolViewModel(SessionToken, 
+                     Tools = new ToolViewModel(sessionToken, 
                      ((string)x.Attribute("code").Value.Replace(@"\", string.Empty)),
-                     _Uid,baseurl).Tools
+                     uid,baseurl).Tools
                  }).ToList<Course>();
         }
     }
