@@ -14,7 +14,7 @@ namespace EclassApi.Extensions
         {
             "\"", "\\", "\a", "\b", "\r", "\n", "\t"
         };
-        public static string HTMLtoSTRING(string HTML)
+        public static string HTMLtoSTRING(this string HTML)
         {
             string tmp = HTML;
             tmp = Regex.Replace
@@ -24,7 +24,7 @@ namespace EclassApi.Extensions
             return tmp;
         }
 
-        public static string RemoveEscapeChars(string str)
+        public static string RemoveEscapeChars(this string str)
         {
             var tmp = str;
             foreach(string escChar in ESCAPE_CHARACTERS)
@@ -32,6 +32,13 @@ namespace EclassApi.Extensions
                 tmp = tmp.Replace(escChar, string.Empty);
             }
             return tmp;
+        }
+
+        public static string IfNullConvertToEmpty(string str)
+        {
+            if (str == null)
+                return string.Empty;
+            return str;
         }
 
         public static Stream GenerateStreamFromString(string s)

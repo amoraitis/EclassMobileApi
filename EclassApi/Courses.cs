@@ -1,18 +1,16 @@
-﻿using EclassApi.Extensions;
-using Flurl.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using EclassApi.Extensions;
+using EclassApi.Models;
+using Flurl.Http;
 
-namespace EclassApi.ViewModel
+namespace EclassApi
 {
     public class Courses
     {
-        private readonly string baseurl, uid, sessionToken,
-            _UserCourses = "/modules/mobile/mcourses.php";
+        private readonly string baseurl, uid, sessionToken;
 
         public Courses(string sessionToken, string baseurl, string uid)
         {
@@ -25,30 +23,19 @@ namespace EclassApi.ViewModel
 
         public List<Course> GetUserCourses()
         {
-            string coursesXml = (baseurl+ _UserCourses)
+            string coursesXml = (baseurl + Constants.UserCourses)
                .PostUrlEncodedAsync(new { token = sessionToken })
                .ReceiveString().GetAwaiter().GetResult();
-            XDocument coursesXDocument = XDocument.Load(StringExtensions.GenerateStreamFromString(coursesXml));
-            return coursesXDocument.Root
-                 .Elements("coursegroup").Elements("course")
+            var coursesXDocument = XDocument.Load(StringExtensions.GenerateStreamFromString(coursesXml));
+            return coursesXDocument.Root?.Elements("coursegroup").Elements("course")
                  .Select(x => new Course
                  {
-                     ID = ((string)x.Attribute("code").Value.Replace(@"\", string.Empty)),
+                     ID = ((string)x.Attribute("code")?.Value.Replace(@"\", string.Empty)),
                      Name = (string)x.Attribute("title"),
-                     Tools = new ToolViewModel(sessionToken, 
-                     ((string)x.Attribute("code").Value.Replace(@"\", string.Empty)),
-                     uid,baseurl).Tools
-                 }).ToList<Course>();
+                     ToolViewModel = new ToolViewModel(sessionToken,
+                     ((string)x.Attribute("code")?.Value.Replace(@"\", string.Empty)),
+                     uid, baseurl)
+                 }).ToList();
         }
-    }
-
-}
-namespace EclassApi
-{
-    public class Course
-    {
-        public string Name { get; set; }
-        public string ID { get; set; }
-        public List<ToolBase> Tools { get; set; }
     }
 }

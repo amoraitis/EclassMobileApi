@@ -11,25 +11,23 @@ It will take 12 seconds to login and download(fill) 10 courses.
 EclassUser eclassUser = new EclassUser("aueb");
 //Start a session with given usename and pass
 await eclassUser.Start("Username", "Password");
+
+//Add tools apart from announcements
+await user.UserCourses.AddToolsAsync();
+
+//Add Announcements
+await user.AddAnnouncementsAsync();
+
 //Print for all User Courses: Course Name, Course ID, Tools by Name
 eclassUser.UserCourses.ForEach(course => {
                     Console.WriteLine(course.Name + " " + course.ID);
-                    course.Tools.ForEach(tool=>Console.WriteLine(tool.Name));
+                    course.ToolViewModel.Tools.ForEach(tool=>Console.WriteLine(tool.Name));
                 });
 eclassUser.DestroySession();
 </code></pre>
 
-###### Attention
-```
-Property Tool.Content is type of Object, but you should use it as:
-case docs: List<HtmlNode> of 2 elements
-case description: HtmlNode
-case courseDescription: HtmlNode
-case announcements: List<Announcements>
-```
-
 #### Class Diagram for Avalaible Classes and fields
-![ClassDiagram.svg](https://raw.githubusercontent.com/amoraitis/EclassMobileApi/master/EclassApi/ClassDiagram.png)
+Deprecated see [v1.1.15 branch](https://github.com/amoraitis/EclassMobileApi/tree/v1.1.15+improvements)
 
 #### Roadmap-Features
 
@@ -39,12 +37,11 @@ case announcements: List<Announcements>
 - [x] Course(courseID, Token)
 	- [x] Announcements
 
-	- [x] Directories(a list of 2 HtmlNode elements)
+	- [x] Directories-Docs(2 links, the one is the download link of the home directory of the course)
     
-    - [x] Course Description(HtmlNode element)
+    - [x] Course Description(as a string)
     
-    - [x] Description(HtmlNode element)
+    - [x] Description(as a string)
+- [x] Logout
 - [x] [**Nuget package**](https://www.nuget.org/packages/EclassApi/)
 - [x] Documentation
-
-HtmlNode [Documentation](http://www.nudoq.org/#!/Packages/HtmlAgilityPack/HtmlAgilityPack/HtmlNode)

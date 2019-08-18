@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <id>EclassApi</id>
-    <version>1.1.15</version>
+    <version>2.0.0</version>
     <title>EclassApi</title>
     <authors>amoraitis</authors>
     <owners>amoraitis</owners>
     <PackageProjectUrl>https://github.com/amoraitis/EclassMobileApi</PackageProjectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <PackageReleaseNotes>Fixed some compatibility errors with external libraries</PackageReleaseNotes>
+    <PackageReleaseNotes>It contains important updates</PackageReleaseNotes>
     <description>An Eclass Mobile API Client for C#</description>
     <RepositoryUrl>https://github.com/amoraitis/EclassMobileApi</RepositoryUrl>
     <PackageTags>eclass, eclassmobileapi, gr</PackageTags>
@@ -25,9 +25,8 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncEnumerator" Version="2.2.2" />
     <PackageReference Include="Flurl.Http" Version="2.4.2" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
     <PackageReference Include="xwebrss" Version="2.2.0" />
   </ItemGroup>
 </Project>
