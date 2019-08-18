@@ -38,8 +38,7 @@ namespace EclassApi.Tests
         [Test, Order(2)]
         public void ShouldHaveCoursesWhenCoursesAdded()
         {
-            var courses = new Courses(user.SessionToken, user.BaseUrl, user.Uid);
-            user.UserCourses = courses.GetUserCourses();
+            user.AddCourses();
             Assert.IsNotNull(user.UserCourses);
             Assert.IsNotEmpty(user.UserCourses.AsEnumerable());
         }

@@ -2,7 +2,7 @@
 [![NuGet version](https://badge.fury.io/nu/EclassApi.svg)](https://badge.fury.io/nu/EclassApi)
 [![Build status](https://ci.appveyor.com/api/projects/status/v0ef1a14et07k0td?svg=true)](https://ci.appveyor.com/project/amoraitis/eclassmobileapi)
 
-It will take 12 seconds to login and download(fill) 10 courses.
+It will take <=8 seconds to login and download(fill) 10 courses.
 
 #### How to:
 
@@ -10,7 +10,10 @@ It will take 12 seconds to login and download(fill) 10 courses.
 //Init an Eclass Session for eclass.aueb.gr
 EclassUser eclassUser = new EclassUser("aueb");
 //Start a session with given usename and pass
-await eclassUser.Start("Username", "Password");
+await eclassUser.StartAsync("Username", "Password");
+
+//Add courses
+user.AddCourses();
 
 //Add tools apart from announcements
 await user.UserCourses.AddToolsAsync();
@@ -23,7 +26,7 @@ eclassUser.UserCourses.ForEach(course => {
                     Console.WriteLine(course.Name + " " + course.ID);
                     course.ToolViewModel.Tools.ForEach(tool=>Console.WriteLine(tool.Name));
                 });
-eclassUser.DestroySession();
+await eclassUser.DestroySessionAsync();
 </code></pre>
 
 #### Class Diagram for Avalaible Classes and fields

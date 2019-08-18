@@ -1,6 +1,6 @@
 build_script:
   # dotnet info
   - ps: dotnet --info
-  # Run dotnet new 
   - ps: dotnet restore
   - ps: dotnet build EclassApi/EclassApi.csproj
+  - ps: dotnet test EclassApi/EclassApi.csproj
