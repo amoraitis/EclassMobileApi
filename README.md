@@ -1,6 +1,10 @@
 # [Eclass Mobile API](https://dev.openeclass.org/projects/openeclass/wiki/%CE%A7%CF%81%CE%AE%CF%83%CE%B7_%CF%84%CE%BF%CF%85_Mobile_API) Client for C#(.net core)
 [![NuGet version](https://badge.fury.io/nu/EclassApi.svg)](https://badge.fury.io/nu/EclassApi)
+[![Github package](https://img.shields.io/badge/-Github%20package-lightgrey)](https://github.com/amoraitis/EclassMobileApi/packages)
 [![Build status](https://ci.appveyor.com/api/projects/status/v0ef1a14et07k0td?svg=true)](https://ci.appveyor.com/project/amoraitis/eclassmobileapi)
+
+[![GitHub license](https://img.shields.io/github/license/amoraitis/EclassMobileApi)](https://github.com/amoraitis/EclassMobileApi/blob/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Famoraitis%2FEclassMobileApi)](https://twitter.com/intent/tweet?text=Try%20out%20c%23%20api%20for%20%40AcademicGUNET%27s%20eclass:&url=https://github.com%2Famoraitis%2FEclassMobileApi)
 
 It will take <=8 seconds to login and download(fill) 10 courses.
 
