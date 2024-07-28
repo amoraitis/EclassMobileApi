@@ -16,7 +16,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.0</TargetFrameworks>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.4' ">$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;dotnet</PackageTargetFallback>
     <ApplicationIcon />
     <StartupObject />  
@@ -27,6 +27,6 @@
   <ItemGroup>
     <PackageReference Include="Flurl.Http" Version="2.4.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.12" />
-    <PackageReference Include="xwebrss" Version="2.2.0" />
+    <PackageReference Include="X.Web.RSS" Version="2.7.1" />
   </ItemGroup>
 </Project>
